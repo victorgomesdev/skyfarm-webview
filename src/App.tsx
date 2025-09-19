@@ -64,7 +64,7 @@ function SkyFarmWebView() {
       return;
     }
 
-    const rawCoords = newData.features[0].geometry.coordinates as number[][][];
+    const rawCoords = (newData.features[0].geometry as { coordinates: number[][][] }).coordinates;
     const filteredCoords = removeDuplicateCoordinates(rawCoords);
     setPolygon(filteredCoords);
   };
