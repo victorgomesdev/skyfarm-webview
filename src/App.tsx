@@ -6,7 +6,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./App.css";
 
-mapboxgl.accessToken = "pk.eyJ1Ijoic2t5ZmFybSIsImEiOiJjbWZxMXBuMnYwMXJpMmpxNGc4aHI2eWdtIn0.O6HX2KqayaIWNZfmdsmXTQ";
+mapboxgl.accessToken = "pk.eyJ1Ijoic2t5ZmFybSIsImEiOiJjbWZyMXN6dmgwMmF4MnFvZ3hzajJ1enpsIn0.6fUROzff1aR4Rq3QHmXfYA";
 
 function SkyFarmWebView() {
   const [polygon, setPolygon] = useState<number[][][] | null>(null);
@@ -95,16 +95,7 @@ function SkyFarmWebView() {
   return (
     <main>
       <div ref={mapContainerRef} className="map-container" />
-      {polygon && polygon[0].length >= 3 ? (
-        <div className="controls">
-          <button className="buttons" style={{ backgroundColor: "red" }}>
-            Cancelar
-          </button>
-          <button className="buttons" style={{ backgroundColor: "green" }}>
-            Continuar
-          </button>
-        </div>
-      ) : null}
+      {polygon?.length}
     </main>
   );
 }

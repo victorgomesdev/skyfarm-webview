@@ -18,10 +18,3 @@
     flex-direction: row;
     justify-content: space-between;
 }
-
-.buttons {
-    border: none;
-    padding: 4px;
-    border-radius: 3px;
-    color: aliceblue;
-}
