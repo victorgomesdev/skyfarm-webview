@@ -9,7 +9,7 @@ import "./App.css";
 mapboxgl.accessToken = "pk.eyJ1Ijoic2t5ZmFybSIsImEiOiJjbWZyMXN6dmgwMmF4MnFvZ3hzajJ1enpsIn0.6fUROzff1aR4Rq3QHmXfYA";
 
 function SkyFarmWebView() {
-  const [polygon, setPolygon] = useState<number[][][] | null>(null);
+  const [polygon, setPolygon] = useState<number[][] | null>(null);
 
   const mapRef = useRef<Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -25,34 +25,11 @@ function SkyFarmWebView() {
     })
   );
 
-  function removeDuplicateCoordinates(coords: number[][][]): number[][][] {
-    if (!coords || coords.length === 0) return coords;
-
-    const unique = coords[0].filter(
-      (coord, index, arr) =>
-        index === 0 ||
-        coord[0] !== arr[index - 1][0] ||
-        coord[1] !== arr[index - 1][1]
-    );
-
-    if (
-      unique.length > 1 &&
-      unique[0][0] === unique[unique.length - 1][0] &&
-      unique[0][1] === unique[unique.length - 1][1]
-    ) {
-      unique.pop();
-    }
-
-    return [unique];
-  }
-
   const handleMapEvents = () => {
     const data = drawRef.current.getAll();
 
     if (data.features.length > 1) {
-
       const lastFeature = data.features[data.features.length - 1];
-
       drawRef.current.deleteAll();
       drawRef.current.add(lastFeature);
     }
@@ -64,11 +41,24 @@ function SkyFarmWebView() {
       return;
     }
 
-    const rawCoords = (newData.features[0].geometry as { coordinates: number[][][] }).coordinates;
-    const filteredCoords = removeDuplicateCoordinates(rawCoords);
-    setPolygon(filteredCoords);
+    let rawCoords = (newData.features[0].geometry as { coordinates: number[][][] }).coordinates[0];
+
+    if (
+      rawCoords.length > 1 &&
+      rawCoords[0][0] === rawCoords[rawCoords.length - 1][0] &&
+      rawCoords[0][1] === rawCoords[rawCoords.length - 1][1]
+    ) {
+      rawCoords = rawCoords.slice(0, -1);
+    }
+
+    setPolygon(rawCoords);
   };
 
+  useEffect(() => {
+
+    //(window as any).ReactNativeWebView.postMessage(JSON.stringify(polygon))
+    console.log(JSON.stringify(polygon))
+  }, [polygon])
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
