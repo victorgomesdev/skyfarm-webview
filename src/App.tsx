@@ -43,14 +43,6 @@ function SkyFarmWebView() {
 
     let rawCoords = (newData.features[0].geometry as { coordinates: number[][][] }).coordinates[0];
 
-    if (
-      rawCoords.length > 1 &&
-      rawCoords[0][0] === rawCoords[rawCoords.length - 1][0] &&
-      rawCoords[0][1] === rawCoords[rawCoords.length - 1][1]
-    ) {
-      rawCoords = rawCoords.slice(0, -1);
-    }
-
     setPolygon(rawCoords);
   };
 
