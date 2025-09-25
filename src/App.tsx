@@ -56,8 +56,8 @@ function SkyFarmWebView() {
 
   useEffect(() => {
 
-    //(window as any).ReactNativeWebView.postMessage(JSON.stringify(polygon))
-    console.log(JSON.stringify(polygon))
+    (window as any).ReactNativeWebView.postMessage(JSON.stringify(polygon))
+    //console.log(JSON.stringify(polygon))
   }, [polygon])
 
   useEffect(() => {
